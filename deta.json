@@ -1,0 +1,13 @@
+{
+    "name": "Private Simple Captcha Api",
+    "description": "Simple api for generating captcha image \uD83D\uDDBC️ and audio \uD83C\uDFB6",
+    "runtime": "python3.9",
+    "env": [
+        {
+            "key": "API_KEY_FOUR_AUTH",
+            "description": "This api key is used when you want to learn text of captcha from captcha id.",
+            "value": "7207a43b-2f02-4cf5-9338-70f6aa617260",
+            "required": true
+        }
+    ]
+}
