@@ -27,6 +27,8 @@ class CaptchaModel(BaseModel):
     audio_url: str
     text_of_captcha: str
     audio_captcha_numbers: int
+    how_many_times_accessed: int = Field(default=0,
+                                         description="this number is a counter. It is increased by every /get-captcha request.")
 
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
@@ -55,7 +57,7 @@ def create_captcha_from_custom_text(request: Request, custom_text: str):
 
 @app.get('/create-random-captcha', response_model=CaptchaModel)
 def create_random_captcha(request: Request,
-                       number_of_words: int = Query(default=1, ge=1, description="How may words should be used?")):
+                          number_of_words: int = Query(default=1, ge=1, description="How may words should be used?")):
     captcha_id = str(uuid4())
 
     if (number_of_words == 1):
@@ -82,16 +84,16 @@ def create_random_captcha(request: Request,
 
 
 @app.get('/get-captcha/{captcha_id}', response_model=CaptchaModel)
-def get_captcha(captcha_id: str, api_key_for_auth: str=Query(title="Api Key which was set at the deployment",example="7207a43b-2f02-4cf5-9338-70f6aa617260")):
-    if(api_key_for_auth!=API_KEY_FOUR_AUTH):
-        raise HTTPException(status_code=401,detail="Api Key is wrong")
+def get_captcha(captcha_id: str, api_key_for_auth: str = Query(title="Api Key which was set at the deployment",
+                                                               example="7207a43b-2f02-4cf5-9338-70f6aa617260")):
+    if (api_key_for_auth != API_KEY_FOUR_AUTH):
+        raise HTTPException(status_code=401, detail="Api Key is wrong")
     captcha = db.get(captcha_id)
     if (captcha == None):
         raise HTTPException(status_code=404, detail="Captcha Id Not Found!")
-
+    captcha['how_many_times_accessed']+=1
+    db.put(captcha,captcha['key'])
     return captcha
-
-
 
 
 @app.get('/get-captcha-image/{captcha_id}.png', response_class=StreamingResponse)
