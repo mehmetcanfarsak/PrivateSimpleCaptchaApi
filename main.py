@@ -13,7 +13,7 @@ from deta import Deta
 from coolname import generate_slug
 from os import getenv
 import random
-import io
+import io, datetime
 
 deta = Deta()
 db = deta.Base('PrivateSimpleCaptchaApi')
@@ -29,6 +29,7 @@ class CaptchaModel(BaseModel):
     audio_captcha_numbers: int
     how_many_times_accessed: int = Field(default=0,
                                          description="this number is a counter. It is increased by every /get-captcha request.")
+    created_at: str = str(datetime.datetime.utcnow())
 
 
 @app.get("/", include_in_schema=False, response_class=HTMLResponse)
@@ -76,7 +77,6 @@ def create_random_captcha(request: Request,
 
     db.put(data=captcha.__dict__, key=captcha_id, expire_in=(60 * 60 * 24))
 
-
     return captcha
 
 
@@ -88,8 +88,8 @@ def get_captcha(captcha_id: str, api_key_for_auth: str = Query(title="Api Key wh
     captcha = db.get(captcha_id)
     if (captcha == None):
         raise HTTPException(status_code=404, detail="Captcha Id Not Found!")
-    captcha['how_many_times_accessed']+=1
-    db.put(captcha,captcha['key'])
+    captcha['how_many_times_accessed'] += 1
+    db.put(captcha, captcha['key'])
     return captcha
 
 
