@@ -76,9 +76,6 @@ def create_random_captcha(request: Request,
 
     db.put(data=captcha.__dict__, key=captcha_id, expire_in=(60 * 60 * 24))
 
-    # drive.put("asds","sasdsadsa")
-    # with open('/tmp/' + captcha_id + '.png', 'rb') as image_file:
-    # drive.put(captcha_id + '.png', image_file.read())
 
     return captcha
 
