@@ -50,6 +50,7 @@ def create_captcha_from_custom_text(request: Request, custom_text: str):
         audio_captcha_numbers=audio_captcha_numbers,
         audio_url="https://" + host + "/get-captcha-audio/" + captcha_id + ".wav",
         captcha_id=captcha_id,
+        created_at=str(datetime.datetime.utcnow()),
     )
     db.put(data=captcha.__dict__, key=captcha_id, expire_in=(60 * 60 * 24))
 
@@ -73,6 +74,7 @@ def create_random_captcha(request: Request,
         audio_captcha_numbers=audio_captcha_numbers,
         audio_url="https://" + host + "/get-captcha-audio/" + captcha_id + ".wav",
         captcha_id=captcha_id,
+        created_at=str(datetime.datetime.utcnow()),
     )
 
     db.put(data=captcha.__dict__, key=captcha_id, expire_in=(60 * 60 * 24))
