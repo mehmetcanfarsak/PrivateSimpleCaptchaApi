@@ -6,9 +6,11 @@ Simple api for generating captcha image 🖼️ and audio 🎶
 
 ⏩ Example Usage:  [https://PrivateSimpleCaptchaApi.deta.dev/create-random-captcha](https://PrivateSimpleCaptchaApi.deta.dev/create-random-captcha "https://PrivateSimpleCaptchaApi.deta.dev/create-random-captcha")
 
-💁 **Example Project** Made with Private Simple Captcha Api :
+💁 **Example Projects** Made with Private Simple Captcha Api :
 * [https://submitform.deta.dev/](https://submitform.deta.dev/)
 * [https://github.com/burakbb/deta-example](https://github.com/burakbb/deta-example)
+* [https://FormToEmailService.deta.dev](https://FormToEmailService.deta.dev)
+* [https://github.com/mehmetcanfarsak/FormToEmailService](https://github.com/mehmetcanfarsak/FormToEmailService)
 
 🏄 Also **You can deploy this api for free and without limits on Deta.Sh** Just click the link below 🛠️
 
